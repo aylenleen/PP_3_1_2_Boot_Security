@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>USER EDIT</title>
+</head>
+<body>
+<h2>Данные пользователя:</h2>
+<br>
+<div>
+    <form th:action="${action} == 'update' ? 'updateUser' : 'saveUser'"
+          th:object="${user}" method="POST">
+
+        <input type="hidden" th:field="*{id}" />
+
+        Username:
+        <input type="text" th:field="*{username}" />
+        <br/><br/>
+        Password
+        <input type="text" th:field="*{password}" />
+        <br/><br/>
+        Name:
+        <input type="text" th:field="*{firstName}" />
+        <br/><br/>
+        Last Name:
+        <input type="text" th:field="*{lastName}" />
+        <br/><br/>
+        E-mail:
+        <input type="text" th:field="*{email}" />
+        <br/><br/>
+        Roles:
+        <select th:field="*{roles}" multiple>
+            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+        </select>
+        <br/><br/>
+        <input type="submit" value="OK" />
+    </form>
+
+    <br><br>
+    <a th:href="@{/admin/all-users}" ><input type="submit" value="Отмена"/></a>
+
+
+    <br><br>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Выйти" />
+    </form>
+
+</div>
+</body>
+</html>
