@@ -26,6 +26,11 @@
 </div>
 
 <br><br>
+<a th:if="${isAdmin == true}" th:href="@{/admin}">
+    <input type="submit" value="К администрированию"/>
+</a>
+
+<br><br>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Выйти"/>
 </form>

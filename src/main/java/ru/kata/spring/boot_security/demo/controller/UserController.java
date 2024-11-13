@@ -91,6 +91,8 @@ public class UserController {
                 .stream()
                 .map(Role::getName)
                 .toList();
+        boolean isAdmin = roleNames.contains("ROLE_ADMIN");
+        model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("roles", roleNames);
         return "users-view";
     }
