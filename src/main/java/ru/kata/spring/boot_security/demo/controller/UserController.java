@@ -87,13 +87,10 @@ public class UserController {
     public String userInfo(Model model, Principal principal) {
         User user = (User) userService.loadUserByUsername(principal.getName());
         model.addAttribute("user", user);
-        StringBuilder stringBuilder = new StringBuilder();
-        List roleNames = user.getRoles()
+        List<String> roleNames = user.getRoles()
                 .stream()
                 .map(Role::getName)
                 .toList();
-        boolean isAdmin = roleNames.contains("ROLE_ADMIN");
-        model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("roles", roleNames);
         return "users-view";
     }
