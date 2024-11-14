@@ -49,6 +49,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void add(User user) {
         User savedUser = userRepository.findByUsername(user.getUsername());
+        //он ищет по username, чтобы не было дублирования, username же не id
+        //id отдельное поле auto increment
+        // или нужно сделать, чтобы username был первичным ключом и убрать поле id?
         if (savedUser == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
