@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.UserRepository;
 import ru.kata.spring.boot_security.demo.model.User;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,14 +50,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void add(User user) {
-        User savedUser = userRepository.findByUsername(user.getUsername());
-        //он ищет по username, чтобы не было дублирования, username же не id
-        //id отдельное поле auto increment
-        // или нужно сделать, чтобы username был первичным ключом и убрать поле id?
-        if (savedUser == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
-        }
     }
 
     @Transactional
@@ -77,6 +73,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(int id) {
         return userRepository.getReferenceById((long) id);
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
 }

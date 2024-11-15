@@ -13,4 +13,5 @@ public interface UserService extends UserDetailsService {
     void update(User user);
     void delete(User user);
     User getUserById(int id);
+    User getUserByUsername(String username);
 }
